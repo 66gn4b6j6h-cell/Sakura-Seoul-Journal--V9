@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#f7f2e8">
-<title>The Sakura & Seoul Journal — V15 Locked Only</title>
+<title>The Sakura & Seoul Journal — V16</title>
 <style>
 :root{--ivory:#f7f2e8;--paper:#fffdf8;--ink:#2f3530;--muted:#6f756f;--green:#63785d;--green2:#e5ecdf;--pink:#d99b9c;--pink2:#f6e5e2;--gold:#b99a63;--line:#e7dfd1;--shadow:0 10px 28px rgba(72,65,52,.09);--radius:18px}
 *{box-sizing:border-box}html,body{margin:0;background:var(--ivory);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif}
@@ -846,6 +846,273 @@ document.documentElement.dataset.build="v15-locked-only";
 </script>
 <style>
 .locked-home15{margin:8px 0 22px;border-radius:26px;overflow:hidden;background:#f3eee5}.locked-home15 img{display:block;width:100%;height:auto}.locked-grid15{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.locked-tile15{position:relative;border-radius:22px;overflow:hidden;background:#f4efe7;box-shadow:var(--shadow);cursor:pointer;min-width:0}.locked-tile15 img{display:block;width:100%;aspect-ratio:1/1;object-fit:cover}.locked-label15{padding:12px 13px 14px;background:#fffaf3}.locked-label15 h3{font-family:Georgia,serif;font-size:20px;margin:0 0 3px;color:#302b27}.locked-label15 p{font-size:12px;line-height:1.35;margin:0;color:#746d66}.locked-feature15{display:block;width:100%;border-radius:24px;box-shadow:var(--shadow);margin:8px 0 18px}@media(max-width:390px){.locked-grid15{gap:10px}.locked-label15 h3{font-size:18px}}
+</style>
+
+
+<script>
+/* ===== V16 DATA + ROUTING REBUILD ===== */
+LOCKED15.packing = "locked-packing-weather.png";
+
+/* Correct source-of-truth dates visible in the app. */
+const tokyoCity = DATA.cities.find(x=>x.name==="Tokyo");
+if(tokyoCity){tokyoCity.dates="Oct 14–21";} // hotel booking is Oct 14–21 in the retained booking data
+const seoulCity = DATA.cities.find(x=>x.name==="Seoul");
+if(seoulCity){seoulCity.dates="Oct 21–25";}
+
+/* ---------- Convenience-store notes from saved screenshots / notes ---------- */
+const KONBINI16 = [
+ {store:"7-Eleven / Lawson / FamilyMart",cat:"Drink / jelly",name:"Ramune jelly product",what:"A Ramune-flavoured jelly-style drink/snack saved from your reel/screenshot list.",spot:"Look for Ramune branding and jelly/pouch-style packaging.",diet:"VERIFY exact ingredients before buying; saved lead, not yet ingredient-verified."},
+ {store:"Convenience stores / drugstores",cat:"Chocolate",name:"GABA chocolate",what:"Chocolate product marketed with GABA; saved as a Japan convenience-store find.",spot:"Usually boxed/pouch chocolate with GABA printed prominently.",diet:"Contains chocolate ingredients; VERIFY milk/egg/allergens on the exact pack."},
+ {store:"Convenience stores",cat:"Lemon drink",name:"Kireto Lemon",what:"Small bottled lemon drink; saved as a recognizable Japanese convenience-store drink.",spot:"Bright lemon/yellow branding; often a small glass bottle.",diet:"VERIFY exact variant and ingredients."},
+ {store:"Convenience stores / drugstores",cat:"Vitamin drink",name:"Chocola BB",what:"Small bottled vitamin-drink line. Different Chocola BB versions exist.",spot:"Compact bottle with Chocola BB branding.",diet:"Choose by exact label; VERIFY variant/ingredients."},
+ {store:"Convenience stores",cat:"Fiber drink",name:"Fibe-Mini",what:"Small fiber drink saved from the screenshots.",spot:"Small bottle; Fibe-Mini branding.",diet:"VERIFY exact ingredients before purchase."},
+ {store:"Convenience stores / drugstores",cat:"Energy drink",name:"Lipovitan D",what:"Classic small Japanese energy-drink bottle.",spot:"Small brown bottle with Lipovitan D branding.",diet:"Caffeinated/functional drink; check label if caffeine sensitivity matters."},
+ {store:"Convenience stores",cat:"Jelly pouch",name:"in Jelly",what:"Portable squeeze-pouch jelly/energy snack line; many variants exist.",spot:"Soft spouted pouch with 'in' / in Jelly branding.",diet:"VERIFY the exact flavour/variant and ingredients."},
+ {store:"Convenience stores",cat:"Nighttime functional drink",name:"Re:Night Recover / GABA drink",what:"Saved nighttime/GABA drink lead from your screenshots.",spot:"Look for Re:Night / GABA wording.",diet:"Creator/screenshot lead only; no health claim is being made. VERIFY exact product."},
+ {store:"Convenience stores / drugstores",cat:"Turmeric drink",name:"Ukon no Chikara",what:"Small turmeric-based drink commonly sold in Japan.",spot:"Small bottle/can with Ukon no Chikara branding.",diet:"VERIFY exact ingredients/variant."},
+ {store:"Convenience stores",cat:"Lemon jelly",name:"Chelate Lemon Citric Acid Jelly",what:"Lemon/citric-acid jelly pouch saved from your list.",spot:"Chelate Lemon branding with yellow/lemon packaging.",diet:"VERIFY exact ingredients."},
+ {store:"Convenience stores / drugstores",cat:"Supplement",name:"Iron gummy supplements",what:"Gummy-style iron supplement lead from your screenshots.",spot:"Check iron/Fe wording and dosage on pack.",diet:"VERIFY gelatin/animal-derived ingredients before buying."},
+ {store:"Convenience stores",cat:"Drink — unresolved",name:"Chikara Mizu",what:"Saved drink name from your screenshots/notes; exact variant/context was not sufficiently captured.",spot:"Use the saved name to identify it in-store.",diet:"VERIFY — do not rely on this entry for ingredients or claimed effects."},
+ {store:"Convenience stores",cat:"Drink — unresolved",name:"Mukumi",what:"Saved screenshot/reel lead associated with Japan convenience-store drinks.",spot:"Use the saved name/packaging in-store.",diet:"VERIFY exact product, ingredients and purpose."},
+ {store:"7-Eleven",cat:"Travel practical",name:"Umbrella with case / microfibre towel",what:"Practical rainy-day/travel item saved from your list.",spot:"Check travel/seasonal section rather than drinks aisle.",diet:"Not food."},
+ {store:"Convenience stores",cat:"Snack",name:"KitKat",what:"Japan-flavour KitKat souvenir/snack lead.",spot:"Flavours and stock vary by branch.",diet:"Vegetarian/egg status varies by flavour — check the exact pack."},
+ {store:"Convenience stores",cat:"Food / condiment",name:"Sugar butter tube",what:"Saved convenience-store food lead from your notes.",spot:"Exact brand not confidently captured.",diet:"VERIFY product and ingredients before buying."}
+];
+
+/* ---------- Local Guide: intentionally broader than Language ---------- */
+const GUIDE16 = {
+ Japan:[
+  ["Transport","Use IC/transit cards for city travel; JR alone will not cover every Osaka/Kyoto/Tokyo trip. Keep the booked Mishima → Kaneyamaen transfer visible on Oct 12."],
+  ["Areas","Osaka: Namba/Dotonbori/Shinsaibashi. Kyoto: Kawaramachi/Gion/Arashiyama/Uji. Fuji: Fujiyoshida/Kawaguchiko. Tokyo: Ginza base with Asakusa/Shibuya/Harajuku/day trips."],
+  ["Etiquette","Queue neatly, keep voices low on transit, follow temple/shrine signage, and avoid blocking pedestrian flow for photos."],
+  ["Bathroom Guide","Major stations, department stores, malls and convenience-store areas are useful bathroom anchors. Carry a small hand towel; some facilities may not provide paper towels."],
+  ["Useful Info","Keep hotel names/addresses offline, save station exits, carry a small trash bag, and keep a coin pouch for lockers/vending machines."],
+  ["Language","Open the full Japanese + Korean cheat sheet with native text, romanization, search and audio."]
+ ],
+ Seoul:[
+  ["Neighbourhoods","Myeongdong/Euljiro base; saved areas include Anguk/Bukchon, Seongsu, Hannam, Hongdae, Gwangjang and the Han River."],
+  ["Transport","Subway + walking for most days; taxi can be useful for luggage or late returns. Keep ICN terminal details with the flight page."],
+  ["Etiquette","Follow queueing and transit norms; use quiet voices on public transport and respect palace/temple rules."],
+  ["Useful Info","CU, GS25, 7-Eleven and emart24 are useful convenience-store anchors. Keep hotel address and Korean place names accessible offline."],
+  ["Language","Open the Korean tab in the full language cheat sheet for food, transport, luggage and basic phrases."]
+ ]
+};
+
+/* ---------- Packing data based on itinerary + planning climate ---------- */
+const WEATHER16 = [
+ {city:"Osaka",dates:"Oct 7–10",range:"Typical Oct: ~23°C high / 16°C low",note:"Mild days, cooler evenings; rain is still possible.",pack:"Breathable layers + light jacket + compact umbrella."},
+ {city:"Kyoto / Uji",dates:"Oct 10–12",range:"Typical Oct: ~23°C high / 14°C low",note:"Temple mornings/evenings can feel cooler than midday.",pack:"Light layer, comfortable walking shoes, compact rain layer."},
+ {city:"Fuji / Kawaguchiko",dates:"Oct 12–14",range:"Cooler than the city stops",note:"Mountain/lake setting can feel notably cooler, especially morning and evening.",pack:"Warm mid-layer + light outer layer; keep one warmer outfit accessible."},
+ {city:"Tokyo",dates:"Oct 14–21",range:"Typical Oct: ~22°C high / 14°C low",note:"Good layering weather; long walking/shopping days.",pack:"Light layers + comfortable shoes + packable rain protection."},
+ {city:"Seoul",dates:"Oct 21–25",range:"Typical Oct: ~20°C high / 11°C low",note:"Later in the month and cooler at night than Osaka/Tokyo.",pack:"Sweater/light jacket; add a warmer evening layer."}
+];
+const PACK16 = {
+ "Clothing":[
+  ["Light waterproof / wind-resistant jacket","Useful for rain and cooler Fuji/Seoul evenings."],
+  ["Warm mid-layer / sweater","Keep accessible for Fuji and later Seoul dates."],
+  ["Breathable tops","For warmer Osaka/Kyoto/Tokyo afternoons."],
+  ["Comfortable walking pants / bottoms","High-step-count sightseeing days."],
+  ["Sleepwear","Hotels + ryokan; check whether ryokan provides yukata."],
+  ["Underwear + socks","Include socks that work with your planned footwear / sandals."],
+  ["One nicer outfit","Useful for special dinners / honeymoon photos."]
+ ],
+ "Footwear":[
+  ["Primary broken-in walking shoes","Core item for Osaka, Kyoto, Tokyo and Seoul."],
+  ["Easy-removal shoes / socks","Useful for some Japanese interiors and saved as a practical shopping note."],
+  ["Blister care","Long walking days; keep in day bag."]
+ ],
+ "Rain & Day Bag":[
+  ["Compact umbrella","October can still be wet; you also saved a Japan umbrella purchase lead."],
+  ["Small hand towel","Useful for bathrooms and rain."],
+  ["Reusable water bottle","For long sightseeing days."],
+  ["Small trash bags","Useful because public bins can be limited."],
+  ["Portable battery + charging cable","Maps, translation, photos and tickets."],
+  ["Coin pouch","Lockers, vending machines and small cash use."]
+ ],
+ "Documents & Tech":[
+  ["Passports","Keep originals secure; offline copies in Traveler Essentials."],
+  ["Flight / hotel confirmations","Keep offline copies of the confirmed bookings."],
+  ["Travel insurance details","Offline copy if applicable."],
+  ["Phone + eSIM plan","Connectivity belongs in Traveler Essentials too."],
+  ["Japan/Korea power setup","Pack chargers and any adapter required by your own devices."],
+  ["Camera / memory / charger","You have camera-shopping notes; bring existing accessories if using them."]
+ ],
+ "Trip-specific":[
+  ["Fuji overnight easy-access layer","Do not bury the warmer layer in forwarded luggage."],
+  ["Ryokan / onsen small bag","Minimal toiletries/change of clothes; follow onsen rules."],
+  ["DisneySea day kit","Comfortable shoes, battery, rain layer, small day bag."],
+  ["Shopping expansion space","Foldable duffel is already on your Japan shopping list."],
+  ["Seoul cooler-evening layer","Keep available after the Oct 21 flight rather than in inaccessible luggage."]
+ ]
+};
+const PACKCITY16 = [
+ ["Osaka","Mild-city kit","Breathable layers, walking shoes, compact umbrella."],
+ ["Kyoto / Uji","Temple + Arashiyama walking","Comfortable shoes, modest flexible layers, rain protection."],
+ ["Fuji","Cooler lake/mountain stop","Warm mid-layer, outer layer, easy-access overnight essentials."],
+ ["Tokyo","Long urban days + DisneySea","Walking shoes, battery, compact rain layer, shopping space."],
+ ["Seoul","Cooler late-October finish","Sweater/light jacket plus warmer evening layer."]
+];
+
+/* ---------- Home: exact locked art + new locked Packing & Weather tile ---------- */
+renderHome=function(){
+ setHeader();
+ const done=Object.values(state.tasks).filter(Boolean).length,ready=Math.round(done/DATA.tasks.length*100);
+ $("#view").innerHTML=`
+  <section class="locked-home15"><img src="${LOCKED15.home}" alt="The Sakura & Seoul Journal"></section>
+  <section class="section"><div class="section-head"><h2>Our journey</h2></div><div class="locked-grid15">
+   ${lockedTile15("Japan","Oct 7–21",LOCKED15.japan,"japanhub")}
+   ${lockedTile15("Seoul","Oct 21–25",LOCKED15.seoul,"seoulhub")}
+  </div></section>
+  <section class="section">
+   <article class="packing-home16 click" onclick="go('packing')"><img src="${LOCKED15.packing}" alt="Packing & Weather"></article>
+  </section>
+  <section class="section"><div class="grid">
+   <div class="card metric click" onclick="go('readiness')"><b>${ready}%</b><span>Trip readiness</span></div>
+   <div class="card metric click" onclick="go('essentials')"><b>Trip</b><span>Traveler essentials</span></div>
+  </div></section>`;
+};
+
+/* ---------- Correct Japan / Seoul hub routing ---------- */
+renderJapanHub15=function(){
+ setHeader("Japan · Oct 7–21");
+ $("#view").innerHTML=`<div class="page-title"><div><div class="kicker">JAPAN · 日本</div><h1>Japan</h1><p>Osaka · Kyoto/Uji · Fuji · Tokyo</p></div></div>
+ <div class="locked-grid15">
+ ${lockedTile15("Osaka","Oct 7–10",LOCKED15.osaka,"city/Osaka")}
+ ${lockedTile15("Kyoto","Oct 10–12",LOCKED15.kyoto,"city/Kyoto")}
+ ${lockedTile15("Fuji / Kawaguchiko","Oct 12–14",LOCKED15.fuji,"city/Fuji%20%2F%20Kawaguchiko")}
+ ${lockedTile15("Tokyo","Oct 14–21",LOCKED15.tokyo,"city/Tokyo")}
+ ${lockedTile15("Restaurants","Japan food only",LOCKED15.jpFood,"food?country=Japan")}
+ ${lockedTile15("Shopping","Japan stores + individual items",LOCKED15.jpShop,"shopping?country=Japan")}
+ ${lockedTile15("Convenience Stores","Drinks · snacks · practical finds",LOCKED15.jpConven,"konbini")}
+ ${lockedTile15("Matcha Map","Uji · Kyoto · Tokyo",LOCKED15.matcha,"matchamap")}
+ ${lockedTile15("Local Guide","Transport · areas · etiquette · bathrooms · language",LOCKED15.jpGuide,"localguide?country=Japan")}
+ </div>`;
+};
+renderSeoulHub=function(){
+ setHeader("Seoul · Oct 21–25");
+ $("#view").innerHTML=`<div class="page-title"><div><div class="kicker">SOUTH KOREA · 서울</div><h1>Seoul</h1><p>Oct 21–25, 2026</p></div></div>
+ <div class="locked-grid15">
+ ${lockedTile15("Itinerary","Five Seoul days",LOCKED15.seoulItin,"today?city=Seoul")}
+ ${lockedTile15("Food","Seoul food + cafés only",LOCKED15.seoulFood,"food?country=South%20Korea")}
+ ${lockedTile15("Shopping","Beauty · bags · fashion · perfume",LOCKED15.seoulShop,"shopping?country=South%20Korea")}
+ ${lockedTile15("Markets & Local Finds","Markets · souvenirs · local goods",LOCKED15.seoulMarket,"shopping?country=South%20Korea")}
+ ${lockedTile15("Local Guide","Neighbourhoods · transport · etiquette · language",LOCKED15.seoulGuide,"localguide?country=South%20Korea")}
+ ${lockedTile15("Hotel & Basecamp","LOTTE City Hotel Myeongdong",LOCKED15.seoul,"city/Seoul")}
+ </div>`;
+};
+
+/* Country-safe food list: country and city filters are both respected. */
+const _renderFood16=renderFood;
+renderFood=function(){
+ const q=queryParams(), country=q.country||"", city=q.city||"All";
+ setHeader(country==="Japan"?"Japan food":country==="South Korea"?"Seoul food":`${DATA.restaurants.length} curated food places`);
+ const source=DATA.restaurants.filter(r=>(!country||r.country===country)&&(!city||city==="All"||r.city===city));
+ const cats=[...new Set(source.map(r=>r.category).filter(Boolean))].sort();
+ $("#view").innerHTML=`<div class="page-title"><div><h1>${country==="Japan"?"Japan Restaurants & Cafés":country==="South Korea"?"Seoul Food & Cafés":"Taste & Moments"}</h1><p>Saved places remain separated by country. VERIFY means the exact current item/menu still needs checking.</p></div></div>
+ <div class="toolbar"><input id="foodSearch16" class="search" placeholder="Search place, dish or area…" oninput="filterFood16()"></div>
+ <div class="chips">${cats.map(x=>`<button class="chip" data-cat="${esc(x)}" onclick="this.classList.toggle('active');filterFood16()">${esc(x)}</button>`).join("")}</div>
+ <div id="foodCount16" class="kicker" style="margin-top:12px"></div><div id="foodList16" class="list"></div>`;
+ window._foodSource16=source; filterFood16();
+};
+function filterFood16(){
+ const s=(document.querySelector("#foodSearch16")?.value||"").toLowerCase();
+ const active=[...document.querySelectorAll("[data-cat].active")].map(x=>x.dataset.cat);
+ const rows=(window._foodSource16||[]).filter(r=>(!s||JSON.stringify(r).toLowerCase().includes(s))&&(!active.length||active.includes(r.category)));
+ $("#foodCount16").textContent=`${rows.length} saved places`;
+ $("#foodList16").innerHTML=rows.map(r=>`<div class="row card click" onclick="go('restaurant/${r.id}')"><div class="row-main"><span class="kicker">${esc(r.city)} · ${esc(r.zone||r.category)}</span><b>${esc(r.name)}</b><small>${esc(r.mustTry||"Saved lead")}<br>Vegetarian: ${esc(r.vegetarian)} · Vegan: ${esc(r.vegan)} · Egg: ${esc(r.egg)}</small></div><b>›</b></div>`).join("");
+}
+
+/* Country-safe shopping with individual article checkboxes. */
+renderShopping=function(){
+ const q=queryParams(), country=q.country||"", city=q.city||"";
+ const items=DATA.shopping.filter(x=>(!country||(country==="South Korea"?x.city==="Seoul":x.city!=="Seoul"))&&(!city||x.city===city));
+ setHeader(country==="Japan"?"Japan shopping":country==="South Korea"?"Seoul shopping":"Shopping & local finds");
+ $("#view").innerHTML=`<div class="page-title"><div><h1>${country==="Japan"?"Japan Shopping":country==="South Korea"?"Seoul Shopping & Local Finds":"Shopping & Local Finds"}</h1><p>City → area → store → individual item. Your saved notes remain visible rather than being reduced to store names.</p></div></div>
+ <div class="list">${items.map(x=>{const a=shopArticles(x),prog=shopProgress(x);return `<div class="card" style="margin-bottom:12px"><span class="kicker">${esc(x.city)} · ${esc(x.area||x.category)}</span><h3>${esc(x.name)}</h3><p>${esc(x.why||"Saved from your trip notes.")}</p>${a.length?`<div class="checklist16">${a.map((v,i)=>`<label class="check16"><input type="checkbox" ${state.shoppingChecks[shopKey(x.id,i)]?"checked":""} onchange="toggleShopItem('${x.id}',${i},this.checked)"><span>${esc(v)}</span></label>`).join("")}</div><small>${prog[0]} / ${prog[1]} checked</small>`:""}<div class="actions" style="margin-top:10px"><button class="btn" onclick="go('shop/${x.id}')">Store details</button></div></div>`}).join("")}</div>`;
+};
+
+/* Japan convenience-store module — not Traveler Essentials. */
+function renderKonbini16(){
+ setHeader("Japan · Convenience Stores");
+ const cats=[...new Set(KONBINI16.map(x=>x.cat))];
+ $("#view").innerHTML=`<div class="page-title"><div><div class="kicker">JAPAN</div><h1>Convenience Stores</h1><p>Your saved drinks, snacks and practical finds explained in English so the names are useful in-store.</p></div></div>
+ <img class="locked-feature15" src="${LOCKED15.jpConven}" alt="Japan Convenience Stores">
+ <div class="chips">${cats.map(c=>`<button class="chip" data-kcat="${esc(c)}" onclick="this.classList.toggle('active');filterKonbini16()">${esc(c)}</button>`).join("")}</div>
+ <div id="konbiniList16" class="list" style="margin-top:12px"></div>`;
+ window._konbini16=KONBINI16; filterKonbini16();
+}
+function filterKonbini16(){
+ const active=[...document.querySelectorAll("[data-kcat].active")].map(x=>x.dataset.kcat);
+ const rows=KONBINI16.filter(x=>!active.length||active.includes(x.cat));
+ $("#konbiniList16").innerHTML=rows.map(x=>`<div class="card"><span class="badge">${esc(x.cat)}</span><h3>${esc(x.name)}</h3><p><b>What it is:</b> ${esc(x.what)}</p><p><b>How to spot it:</b> ${esc(x.spot)}</p><p><b>Where:</b> ${esc(x.store)}</p><div class="notice">${esc(x.diet)}</div></div>`).join("");
+}
+
+/* Local Guide — language is one section, not the entire destination. */
+function renderLocalGuide16(country){
+ const isJP=country==="Japan", rows=GUIDE16[isJP?"Japan":"Seoul"];
+ setHeader(`${isJP?"Japan":"Seoul"} · Local Guide`);
+ $("#view").innerHTML=`<div class="page-title"><div><h1>Local Guide</h1><p>${isJP?"Japan transport, areas, etiquette, bathrooms, useful info and language.":"Seoul neighbourhoods, transport, etiquette, useful info and language."}</p></div></div>
+ <img class="locked-feature15" src="${isJP?LOCKED15.jpGuide:LOCKED15.seoulGuide}" alt="${isJP?"Japan":"Seoul"} Local Guide">
+ <div class="list">${rows.map(r=>`<div class="card"><h3>${esc(r[0])}</h3><p>${esc(r[1])}</p>${r[0]==="Language"?`<button class="btn primary" onclick="go('language')">Open Language Cheat Sheet</button>`:""}</div>`).join("")}</div>`;
+}
+
+/* Packing & Weather with five useful, clickable sections. */
+function packNav16(active){
+ const tabs=[["weather","Weather"],["checklist","Checklist"],["city","By City"],["luggage","Luggage"],["essentials","Essentials"]];
+ return `<div class="chips">${tabs.map(x=>`<button class="chip ${active===x[0]?"active":""}" onclick="go('packing/${x[0]}')">${x[1]}</button>`).join("")}</div>`;
+}
+function renderPacking16(section="weather"){
+ setHeader("Packing & Weather");
+ let body="";
+ if(section==="weather") body=`<div class="notice">Planning climate, not a trip forecast. Actual forecasts will only be reliable closer to each travel date.</div><div class="list">${WEATHER16.map(w=>`<div class="card"><span class="kicker">${w.dates}</span><h3>${w.city}</h3><p><b>${w.range}</b><br>${w.note}</p><div class="badge">${w.pack}</div></div>`).join("")}</div>`;
+ if(section==="checklist") body=Object.entries(PACK16).map(([cat,rows])=>`<section class="section"><div class="section-head"><h2>${cat}</h2></div><div class="card">${rows.map((r,i)=>{const key=`pack16::${cat}::${i}`;return `<label class="check16"><input type="checkbox" ${state.shoppingChecks[key]?"checked":""} onchange="state.shoppingChecks['${key}']=this.checked;persist()"><span><b>${r[0]}</b><small>${r[1]}</small></span></label>`}).join("")}</div></section>`).join("");
+ if(section==="city") body=`<div class="list">${PACKCITY16.map(r=>`<div class="card"><span class="kicker">${r[0]}</span><h3>${r[1]}</h3><p>${r[2]}</p></div>`).join("")}</div>`;
+ if(section==="luggage") body=`<div class="list"><div class="card"><h3>Oct 12 · Kyoto → Fuji</h3><p>Keep the Fuji overnight layer and essentials accessible. Your booked Kaneyamaen transfer boards at Mishima Station at 13:10, visits one seasonal attraction, and arrives at Kaneyamaen at 15:30.</p><span class="badge">Booked · ¥4,000 per person</span></div><div class="card"><h3>Luggage forwarding strategy</h3><p>Use forwarding when it reduces carrying on transfer days; keep passports, medication, electronics, valuables and one change of clothes with you.</p></div><div class="card"><h3>Shopping expansion</h3><p>A foldable duffel is already on your Japan shopping list for the return journey.</p></div><button class="btn primary" onclick="go('luggage')">Open full luggage services</button></div>`;
+ if(section==="essentials") body=`<div class="grid">${card("Documents","Passports, confirmations and offline copies","documents","▤")}${card("Flights","Confirmed flight details and terminals","bookings","✈")}${card("Hotels","Booked stays and basecamp details","accommodation","⌂")}${card("Connectivity","eSIM, charging and offline maps","practical/connectivity","▦")}</div>`;
+ $("#view").innerHTML=`<div class="page-title"><div><div class="kicker">TRIP PREP</div><h1>Packing & Weather</h1><p>Built around your October Japan + Seoul itinerary.</p></div></div>${packNav16(section)}<div style="margin-top:14px">${body}</div>`;
+}
+
+/* Traveler Essentials remains separate from Convenience Stores and Local Guide. */
+const _renderMore16=renderMore;
+renderMore=function(){
+ setHeader("Trip tools");
+ $("#view").innerHTML=`<div class="page-title"><div><h1>More</h1><p>Trip-wide tools stay separate from destination guides.</p></div></div><div class="grid">
+ ${card("Traveler Essentials","Hotels, flights, luggage, documents, connectivity and money","essentials","▤")}
+ ${card("Packing & Weather","Weather planning, checklist and by-city gear","packing","☁")}
+ ${card("Language Cheat Sheet","Japanese + Korean phrases with audio","language","あ")}
+ ${card("Shopping & Finds","Full saved shopping database","shopping","◌")}
+ ${card("Journal","Trip notes and memories","journal","✎")}
+ ${card("Saved Food","Restaurant shortlist","favorites","★")}
+ </div>`;
+};
+
+/* Route handling for V16. */
+const _go16=go;
+go=function(route){
+ if(route==="konbini"){location.hash="#konbini";renderKonbini16();return}
+ if(route.startsWith("localguide")){location.hash="#"+route;const q=new URLSearchParams(route.split("?")[1]||"");renderLocalGuide16(q.get("country")==="Japan"?"Japan":"South Korea");return}
+ if(route==="packing"||route.startsWith("packing/")){location.hash="#"+route;renderPacking16(route.split("/")[1]||"weather");return}
+ return _go16(route);
+};
+window.addEventListener("hashchange",()=>{
+ const r=location.hash.slice(1);
+ if(r==="konbini")renderKonbini16();
+ else if(r.startsWith("localguide")){const q=new URLSearchParams(r.split("?")[1]||"");renderLocalGuide16(q.get("country")==="Japan"?"Japan":"South Korea")}
+ else if(r==="packing"||r.startsWith("packing/"))renderPacking16(r.split("/")[1]||"weather");
+});
+
+/* V16 small-screen styles */
+document.documentElement.dataset.build="v16-data-rebuild";
+</script>
+<style>
+.packing-home16{border-radius:24px;overflow:hidden;background:#f5efe6;box-shadow:var(--shadow)}
+.packing-home16 img{display:block;width:100%;height:auto}
+.checklist16{margin:10px 0}
+.check16{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid rgba(70,60,50,.1)}
+.check16:last-child{border-bottom:0}
+.check16 input{width:20px;height:20px;margin-top:2px;accent-color:#78866b}
+.check16 span{display:block;line-height:1.35}
+.check16 small{display:block;color:#7a746e;margin-top:3px}
 </style>
 
 </body></html>
