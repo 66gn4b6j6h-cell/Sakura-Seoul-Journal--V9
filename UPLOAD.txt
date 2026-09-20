@@ -1,0 +1,1 @@
+Upload index.html and all locked-*.png files together to the ROOT of your GitHub Pages repository. This package intentionally contains only the locked tile artwork; no legacy asset-* files are included.
